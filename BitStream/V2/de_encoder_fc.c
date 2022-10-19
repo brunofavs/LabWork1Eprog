@@ -23,7 +23,7 @@ int readBit(BitStream* bs){
 
     //* Inicially the function should check if it should get another character from the file and if said character is EOF
 
-    if(bs->idx == 0){
+    if(bs->idx == 7){
         int chr = getc(bs->fp);
         printf("Chr read is %d\n",chr);
         if( chr == EOF){ // Can only check if is EOF when the first if is ran, otherwise it will give error since int chr is volatile
@@ -37,17 +37,16 @@ int readBit(BitStream* bs){
     // printf("bd index is %d\n",bs->idx);
 
     int on_off;    
-        
     if( (1<<bs->idx) & bs->buf){ // Verifica se o bit na posição idx está a 1 ou 0
-        ++bs->idx;
+        --bs->idx;
         on_off = 1;
     }
     else{
-        ++bs->idx;
+        --bs->idx;
         on_off = 0;
       }
 
-    bs->idx = bs->idx == 8 ? 0 : bs->idx;  
+    bs->idx = bs->idx == -1 ? 7 : bs->idx;  
 
     return on_off;
 }

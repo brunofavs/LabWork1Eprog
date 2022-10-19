@@ -65,9 +65,9 @@ int main(){
     bsw.buf = 0;
     bsw.fp = fopen("out_file","w");
 
-    // decoder(&bsr,&bsw);
+    decoder(&bsr,&bsw);
 
-    encoder(&bsr,&bsw);
+    //encoder(&bsr,&bsw);
 
 
     
