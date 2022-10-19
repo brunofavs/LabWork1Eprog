@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "de_encoder_fc.h"
 
 //-----------------------
@@ -12,11 +13,11 @@ void decoder(BitStream* bsr_p,BitStream* bsw_p){
     while( on_off != -1){        // cant have the function called here, because would be calling it twice
 
         if(on_off){
-            printf("Adding bit 1 to file in position %d.\n",bsr_p->idx);
+            printf("Adding bit 1 to file\n" );
             putc(49,bsw_p->fp);
         }
         else{
-            printf("Adding bit 0 in file in position %d.\n",bsr_p->idx);
+            printf("Adding bit 0 in file\n" );
             putc(48,bsw_p->fp);
         }
         on_off = readBit(bsr_p);
@@ -53,21 +54,40 @@ void encoder(BitStream* bsr_p,BitStream* bsw_p){
 //      Main
 //-----------------------
 
-int main(){
+int main(int argc,char* argv[]){
 
-    BitStream bsr;
-    bsr.idx = 0;
-    bsr.buf = 0;    // To store the current character in memory, to prevent the use of a global variable/ more function I/O
-    bsr.fp = fopen("src_file","r");
+    BitStream bsr,bsw;
+    initBitStreams(&bsr,&bsw);
 
-    BitStream bsw;
-    bsw.idx = 0;
-    bsw.buf = 0;
-    bsw.fp = fopen("out_file","w");
+    if( strcmp(argv[1],"decode") == 0){
+        printf("Please type the path of the binary file to decode\n");
+        bsr.fp = fopen(getStr(),"r");
+        decoder(&bsr,&bsw);
+        printf("Conversion to text file finished!\n");
 
-    decoder(&bsr,&bsw);
+   } else if( strcmp(argv[1],"encode") == 0){
+        printf("Please type the path of the text file to encode\n");
+        bsr.fp = fopen(getStr(),"r");
+        encoder(&bsr,&bsw);
+        printf("Conversion to binary file finished!\n");
 
-    //encoder(&bsr,&bsw);
+   } else {
+        printf("ERROR, please type 'encode' or 'decode' to begin");
+        return 1;
+   }
+
+
+
+
+
+
+
+
+
+
+
+    
+
 
 
     

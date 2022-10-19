@@ -9,6 +9,10 @@ typedef struct bs{
     FILE* fp;
 } BitStream;
     
+char* getStr();
+
+void initBitStreams(BitStream* bsr, BitStream* bsw);
+
 void writeBit(BitStream* bs,int bit); // Function prototype
 
 // A função writeBit guarda um bit na posição de memória e avança o cursor e o ponteiro do ficheiro, quando o cursor ultrapassa 8 escreve o byte no ficheiro, correspondendo a um qualquer caracter. É usado no encoding.

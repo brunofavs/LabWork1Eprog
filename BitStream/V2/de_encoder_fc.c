@@ -1,17 +1,24 @@
 #include "de_encoder_fc.h"
 #include <stdio.h>
-
+//-----------------------
+//      GetStr 
+//-----------------------
+char* getStr(){
+    char* a;
+    scanf("%s",a);
+    return a;
+}
 //-----------------------
 //      Encoding 
 //-----------------------
 void writeBit(BitStream* bs,int bit){
-    
+    // idx inicial value 7
     bs->buf = (bit << bs->idx) | bs->buf;
-    ++bs->idx;
+    --bs->idx;
 
-    if(bs->idx == 8){ // the buffer is full
+    if(bs->idx == -1){ // the buffer is full
         putc(bs->buf,bs->fp); // bs.buf char originally, here casted to int
-        bs->idx = 0;
+        bs->idx = 7;
         bs->buf = 0;
     }
 
@@ -21,8 +28,8 @@ void writeBit(BitStream* bs,int bit){
 //-----------------------
 int readBit(BitStream* bs){
 
-    //* Inicially the function should check if it should get another character from the file and if said character is EOF
 
+    //* Inicially the function should check if it should get another character from the file and if said character is EOF
     if(bs->idx == 7){
         int chr = getc(bs->fp);
         printf("Chr read is %d\n",chr);
@@ -34,8 +41,6 @@ int readBit(BitStream* bs){
     }
 
     //* Now the function should know whether to return 0 or 1 based on index and buffer
-    // printf("bd index is %d\n",bs->idx);
-
     int on_off;    
     if( (1<<bs->idx) & bs->buf){ // Verifica se o bit na posição idx está a 1 ou 0
         --bs->idx;
@@ -49,4 +54,16 @@ int readBit(BitStream* bs){
     bs->idx = bs->idx == -1 ? 7 : bs->idx;  
 
     return on_off;
+}
+//-----------------------
+//      Init BitStreams 
+//-----------------------
+void initBitStreams(BitStream* bsr, BitStream* bsw){
+    bsr->idx = 7;
+    bsr->buf = 0;   
+   //--------
+    bsw->idx = 7;
+    bsw->buf = 0;
+    bsw->fp = fopen("out_file","w");
+
 }
