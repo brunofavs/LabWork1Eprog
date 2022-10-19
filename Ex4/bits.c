@@ -20,7 +20,7 @@ int Bin2Dec(char* bvalue){
     for(i=0; bvalue[i]!='\0' ; i++) {
                 ////  Fiz um Bitwise AND &, e como os boleanos podem estar em posições de byte diferentes, dava sempre falso ao
                 ////  ao meter !=1 & .... !=1
-        if ( (bvalue[1]-'0') != 1 && (bvalue[1]-'0') != 0 ) {
+        if ( (bvalue[i]-'0') != 1 && (bvalue[i]-'0') != 0 ) {
             printf("Input must consist of 1's or 0's\n");
             return 404;
         }
