@@ -10,6 +10,7 @@ char* getStr(){
 int getInt(){
     int a;
     scanf("%d",&a);
+
     return a;
 }
 
@@ -52,16 +53,16 @@ int Bin2Dec(char* bvalue){
 char* Dec2Bin(unsigned dvalue){
     //input unsigned int
     unsigned i;
+    
     // o unsigned int aqui tem 32 bits, menos que começamos com i = 100...00 (32 algarismos)
     // ao dividir por 2 passamos de i=100...00 para i=010....000 ou seja damos right shift a i
     // provavelmente podiamos só meter i=i>>1 no update statement
     //confirmed, it works fine as well
     
-    for(i=1<<8 ; i>0 ; i=i>>1 ) {
+    for(i=1<<7 ; i>0 ; i=i>>1 ) {
         (dvalue & i) ? printf("1") : printf("0");
         // This is a short notation for if bool then x else y
-        // Basically the programm always compares the value with a 'single 1' binary number
-        // ! [ CONFIRMAR] If there is anything other than 0 after the AND operator, 
+        // Basically the programm always compares the value with a 'single 1' binary number 
         // ! the binary will evaluate to true and print 1, otherwise prints 0
 
     }
@@ -72,7 +73,10 @@ int main(int argc,char* argv[]){
     // strcmp() compares 2 strings, returns 0 if they're equal
     // == doesnt work because as strings are char*, they compare both strings adresses, which is wrong here
     // returns 0 if both str's are equal
-
+    if(argc == 1){
+        printf("ERROR - No input, please type b-d or d-b to begin\n");
+        return 1;
+    }
     if(argc!=2){
         printf("ERROR - only 1 input allowed\n");
         return 1;
