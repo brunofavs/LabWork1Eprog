@@ -78,11 +78,11 @@ void decoder(BitStream* bsr_p,BitStream* bsw_p){
     while( on_off != -1){        // cant have the function called here, because would be calling it twice
 
         if(on_off){
-            printf("Adding bit 1 to file\n" );
+            printf("Adding char '1' to file\n" );
             putc(49,bsw_p->fp);
         }
         else{
-            printf("Adding bit 0 in file\n" );
+            printf("Adding char '0' in file\n" );
             putc(48,bsw_p->fp);
         }
         on_off = readBit(bsr_p);
